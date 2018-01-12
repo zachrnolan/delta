@@ -1,32 +1,28 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { NativeRouter, Route, Switch, Redirect } from 'react-router-native'
+import { BottomNavigation, Tab } from 'react-router-navigation'
+import Accounts from './modules/Accounts'
+import Profile from './modules/Profile'
 
 export default class App extends Component<{}> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Delta
-        </Text>
-      </View>
+      <NativeRouter>
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/accounts" />} />
+          <Route
+            path="/"
+            render={() => (
+              <BottomNavigation
+                lazy={false}
+                tabActiveTintColor="blue">
+                <Tab label="Accounts" path="/accounts" component={Accounts} />
+                <Tab label="Profile" path="/profile" component={Profile} />
+              </BottomNavigation>
+            )}
+          />
+        </Switch>
+      </NativeRouter>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-})
